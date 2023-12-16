@@ -57,8 +57,8 @@ export const UsersList = ({ searchedText }: { searchedText: string }) => {
       <StyledListContainer>
         {users.map((user, index) => (
           <Accordion
-            key={`${user.id}_${user.login}`}
-            title={user.login}
+            key={`${user.id}_${user.login || ""}`}
+            title={user.login || ""}
             avatarUrl={user.avatar_url}
             index={index}
             isExpanded={expandedIndex === index}
