@@ -20,12 +20,12 @@ const initialState: ReposState = {
   status: "idle",
 };
 
-export const getUserRepos = createAsyncThunk<Repo[]>(
+export const getUserRepos = createAsyncThunk(
   "repos/getUserRepos",
-  async (userName) => {
+  async (data: { userName: string }) => {
     try {
       const response = await axios.get(
-        `https://api.github.com/users/${userName}/repos`
+        `https://api.github.com/users/${data.userName}/repos`
       );
       return response.data.items || [];
     } catch (error) {

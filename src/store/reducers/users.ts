@@ -19,12 +19,12 @@ const initialState: UsersState = {
   status: "idle",
 };
 
-export const searchUsers = createAsyncThunk<User[]>(
+export const searchUsers = createAsyncThunk(
   "users/searchUsers",
-  async (searchTerm) => {
+  async (data: { searchTerm: string }) => {
     try {
       const response = await axios.get(
-        `https://api.github.com/search/users?q=${searchTerm}&per_page=5`
+        `https://api.github.com/search/users?q=${data.searchTerm}&per_page=5`
       );
       return response.data.items || [];
     } catch (error) {
