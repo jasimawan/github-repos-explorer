@@ -6,7 +6,7 @@ import { searchUsers } from "./store/reducers/users";
 import { AppDispatch } from "./store/store";
 
 const ContainerDiv = styled.div`
-  height: 98vh;
+  height: 95vh;
   display: flex;
   flex-direction: column;
   align-items: flex-start;

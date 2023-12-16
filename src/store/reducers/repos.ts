@@ -1,14 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import axios from "axios";
-
-type Repo = {
-  id: number;
-  name: string;
-  description: string;
-  stargazers_count: number;
-  html_url: string;
-};
+import { Repo } from "../../types";
 
 interface ReposState {
   reposList: Repo[];
@@ -27,7 +20,7 @@ export const getUserRepos = createAsyncThunk(
       const response = await axios.get(
         `https://api.github.com/users/${data.userName}/repos`
       );
-      return response.data.items || [];
+      return response.data || [];
     } catch (error) {
       console.error("Error fetching users data: ", error);
       return [];
@@ -56,7 +49,7 @@ export const reposSlice = createSlice({
 });
 
 // Selectors
-export const searchedRepos = (state: RootState) => state.repos.reposList;
-export const searchReposStatus = (state: RootState) => state.repos.status;
+export const userRepos = (state: RootState) => state.repos.reposList;
+export const userReposStatus = (state: RootState) => state.repos.status;
 
 export default reposSlice.reducer;
