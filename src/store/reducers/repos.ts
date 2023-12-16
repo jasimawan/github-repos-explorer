@@ -32,7 +32,11 @@ export const getUserRepos = createAsyncThunk(
 export const reposSlice = createSlice({
   name: "repos",
   initialState,
-  reducers: {},
+  reducers: {
+    resetRepos: (state) => {
+      state.reposList = [];
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getUserRepos.pending, (state) => {
       state.status = "loading";
@@ -47,6 +51,9 @@ export const reposSlice = createSlice({
     });
   },
 });
+
+// Actions
+export const { resetRepos } = reposSlice.actions;
 
 // Selectors
 export const userRepos = (state: RootState) => state.repos.reposList;

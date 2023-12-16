@@ -1,8 +1,13 @@
 import { useDispatch, useSelector } from "react-redux";
-import { searchedUsers, searchUsersStatus } from "../store/reducers/users";
+import {
+  expandedUserIndex,
+  expandUser,
+  searchedUsers,
+  searchUsersStatus,
+} from "../store/reducers/users";
 import { Accordion, LoadingSpinner, ReposList } from "./index";
 import styled from "styled-components";
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 import { AppDispatch } from "../store/store";
 import { getUserRepos } from "../store/reducers/repos";
 
@@ -26,13 +31,11 @@ export const UsersList = ({ searchedText }: { searchedText: string }) => {
   const dispatch = useDispatch<AppDispatch>();
   const users = useSelector(searchedUsers);
   const status = useSelector(searchUsersStatus);
-  const [expandedUserIndex, setExpandedUserIndex] = useState<number | null>(
-    null
-  );
+  const expandedIndex = useSelector(expandedUserIndex);
 
   const handleExpandUser = useCallback(
     (index: number) => {
-      setExpandedUserIndex(index);
+      dispatch(expandUser(index));
       dispatch(getUserRepos({ userName: users[index].login }));
     },
     [dispatch, users]
@@ -58,7 +61,7 @@ export const UsersList = ({ searchedText }: { searchedText: string }) => {
             title={user.login}
             avatarUrl={user.avatar_url}
             index={index}
-            isExpanded={expandedUserIndex === index}
+            isExpanded={expandedIndex === index}
             onExpand={handleExpandUser}
           >
             <ReposList />

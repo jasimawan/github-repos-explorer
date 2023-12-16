@@ -2,8 +2,9 @@ import styled from "styled-components";
 import { TextInput, UsersList, StyledButton } from "./components";
 import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
-import { searchUsers } from "./store/reducers/users";
+import { expandUser, searchUsers } from "./store/reducers/users";
 import { AppDispatch } from "./store/store";
+import { resetRepos } from "./store/reducers/repos";
 
 const ContainerDiv = styled.div`
   height: 95vh;
@@ -22,6 +23,8 @@ function App() {
   const handleSearch = useCallback(() => {
     if (searchTerm) {
       dispatch(searchUsers({ searchTerm: searchTerm }));
+      dispatch(resetRepos());
+      dispatch(expandUser(-1));
     }
   }, [dispatch, searchTerm]);
 
